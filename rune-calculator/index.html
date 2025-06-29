@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nightreign Rune Calculator</title>
+
+    <link rel="icon" href="images/favicon.png" type="image/png">
+
+    <meta property="og:title" content="Nightreign Rune Calculator">
+    <meta property="og:description" content="Calculate Rune costs from 1 to 15 or inbetween">
+    <meta property="og:image" content="images/thumbnail.png">
+    <meta property="og:url" content="https://goldsoular.github.io/ERNR-Calculator/nightreign-calculator/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="en_US">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="dynamic-image-layer"></div>
+    <div id="dark-overlay"></div>
+
+    <div class="container" id="calculator-container">
+        <img src="images/logo.png" alt="Nightreign Rune Calculator" id="calculator-logo">
+
+        <div class="input-group">
+            <label for="currentLevel">Your Current Level:</label>
+            <select id="currentLevel"></select>
+        </div>
+
+        <div class="input-group">
+            <label for="desiredLevel">Your Desired Level:</label>
+            <select id="desiredLevel"></select>
+        </div>
+
+        <button id="calculateBtn">Calculate Runes</button>
+
+        <div id="result"></div>
+        <div id="error"></div>
+    </div>
+
+    <button id="swapLayoutBtn">Swap Layout</button>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
