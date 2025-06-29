@@ -21,39 +21,74 @@ for (let i = minLevel; i < maxLevel; i++) {
   currentLevelSelect.appendChild(option);
 }
 
-for (let i = minLevel + 1; i <= maxLevel; i++) {
-  const option = document.createElement("option");
-  option.value = i;
-  option.textContent = `Level ${i}`;
-  desiredLevelSelect.appendChild(option);
-}
-
-currentLevelSelect.addEventListener("change", () => {
-  const currentLevel = parseInt(currentLevelSelect.value);
+function populateDesiredLevelOptions(
+  currentLevel,
+  previouslySelectedDesiredLevel
+) {
   desiredLevelSelect.innerHTML = "";
+  let foundPreviousSelection = false;
+
   for (let i = currentLevel + 1; i <= maxLevel; i++) {
     const option = document.createElement("option");
     option.value = i;
     option.textContent = `Level ${i}`;
     desiredLevelSelect.appendChild(option);
+
+    if (i === previouslySelectedDesiredLevel) {
+      foundPreviousSelection = true;
+    }
   }
-  resultDiv.style.display = "none";
-  errorDiv.style.display = "none";
+
+  if (foundPreviousSelection) {
+    desiredLevelSelect.value = previouslySelectedDesiredLevel;
+  } else {
+    if (desiredLevelSelect.options.length > 0) {
+      desiredLevelSelect.value = currentLevel + 1;
+    } else {
+      desiredLevelSelect.value = currentLevel;
+      desiredLevelSelect.disabled = true;
+    }
+  }
+}
+
+currentLevelSelect.addEventListener("change", () => {
+  const currentLevel = parseInt(currentLevelSelect.value);
+  const previouslySelectedDesiredLevel = parseInt(desiredLevelSelect.value);
+  populateDesiredLevelOptions(currentLevel, previouslySelectedDesiredLevel);
 });
 
-currentLevelSelect.dispatchEvent(new Event("change"));
+document.addEventListener("DOMContentLoaded", () => {
+  currentLevelSelect.value = minLevel;
+  populateDesiredLevelOptions(parseInt(currentLevelSelect.value), maxLevel);
+
+  const dynamicImageLayer = document.getElementById("dynamic-image-layer");
+  const backgroundImages = [
+    "images/classes/duchess.webp",
+    "images/classes/executor.webp",
+    "images/classes/guardian.webp",
+    "images/classes/ironeye.webp",
+    "images/classes/raider.webp",
+    "images/classes/recluse.webp",
+    "images/classes/revenant.webp",
+    "images/classes/wylder.webp",
+  ];
+
+  const randomIndex = Math.floor(Math.random() * backgroundImages.length);
+  const selectedImage = backgroundImages?.[randomIndex];
+  dynamicImageLayer.style.backgroundImage = `url('${selectedImage}')`;
+});
 
 calculateBtn.addEventListener("click", () => {
-  const currentLevel = parseInt(currentLevelSelect.value);
-  const desiredLevel = parseInt(desiredLevelSelect.value);
-
   resultDiv.style.display = "none";
   errorDiv.style.display = "none";
   resultDiv.innerHTML = "";
   errorDiv.textContent = "";
 
   resultDiv.classList.remove("highlight-success");
-  resultDiv.style.animation = ""; // Crucial to allow animation to replay
+  resultDiv.style.animation = "";
+
+  const currentLevel = parseInt(currentLevelSelect.value);
+  const desiredLevel = parseInt(desiredLevelSelect.value);
 
   if (isNaN(currentLevel) || isNaN(desiredLevel)) {
     errorDiv.textContent = "Please select both current and desired levels.";
@@ -81,24 +116,4 @@ calculateBtn.addEventListener("click", () => {
 
 swapLayoutBtn.addEventListener("click", () => {
   body.classList.toggle("layout-swapped");
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const dynamicImageLayer = document.getElementById("dynamic-image-layer");
-  const backgroundImages = [
-    "images/classes/duchess.webp",
-    "images/classes/executor.webp",
-    "images/classes/guardian.webp",
-    "images/classes/ironeye.webp",
-    "images/classes/raider.webp",
-    "images/classes/recluse.webp",
-    "images/classes/revenant.webp",
-    "images/classes/wylder.webp",
-  ];
-
-  const randomIndex = Math.floor(Math.random() * backgroundImages.length);
-
-  const selectedImage = backgroundImages?.[randomIndex];
-
-  dynamicImageLayer.style.backgroundImage = `url('${selectedImage}')`;
 });
