@@ -75,7 +75,7 @@ body {
   -webkit-backdrop-filter: blur(12px);
   padding: 40px;
   width: 100%;
-  max-width: 450px;
+  max-width: 380px;
   text-align: center;
   z-index: 3;
   overflow: hidden;
@@ -335,7 +335,7 @@ body.layout-swapped #dynamic-image-layer {
     margin: 0;
     width: auto;
     max-width: 450px;
-    padding: 40px 20px;
+    padding: 40px 50px;
     box-sizing: border-box;
     height: auto;
     flex-shrink: 0;
