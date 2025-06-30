@@ -14,6 +14,14 @@ const body = document.body;
 const maxLevel = 15;
 const minLevel = 1;
 
+const mobileMediaQuery = window.matchMedia("(max-width: 1000px)");
+
+function handleMobileLayout(e) {
+  if (e.matches) {
+    body.classList.remove("layout-swapped");
+  }
+}
+
 for (let i = minLevel; i < maxLevel; i++) {
   const option = document.createElement("option");
   option.value = i;
@@ -54,11 +62,13 @@ function populateDesiredLevelOptions(
 currentLevelSelect.addEventListener("change", () => {
   const currentLevel = parseInt(currentLevelSelect.value);
   const previouslySelectedDesiredLevel = parseInt(desiredLevelSelect.value);
+
   populateDesiredLevelOptions(currentLevel, previouslySelectedDesiredLevel);
 });
 
 document.addEventListener("DOMContentLoaded", () => {
   currentLevelSelect.value = minLevel;
+
   populateDesiredLevelOptions(parseInt(currentLevelSelect.value), maxLevel);
 
   const dynamicImageLayer = document.getElementById("dynamic-image-layer");
@@ -72,10 +82,12 @@ document.addEventListener("DOMContentLoaded", () => {
     "images/classes/revenant.webp",
     "images/classes/wylder.webp",
   ];
-
   const randomIndex = Math.floor(Math.random() * backgroundImages.length);
   const selectedImage = backgroundImages?.[randomIndex];
   dynamicImageLayer.style.backgroundImage = `url('${selectedImage}')`;
+
+  mobileMediaQuery.addEventListener("change", handleMobileLayout);
+  handleMobileLayout(mobileMediaQuery);
 });
 
 calculateBtn.addEventListener("click", () => {
