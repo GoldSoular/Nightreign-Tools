@@ -466,7 +466,7 @@ body.layout-swapped #countdown-section {
   border-radius: 6px;
   font-size: 1em;
   font-weight: 600;
-  font-family: "Poppins", serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .countdown-main {
