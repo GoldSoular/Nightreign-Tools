@@ -18,35 +18,61 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jacquard+12&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-    <div id="dynamic-image-layer"></div>
     <div id="dark-overlay"></div>
+    <div class="center-flex-row">
+        <div class="container" id="calculator-container">
+            <img src="images/logo.png" alt="Nightreign Rune Calculator" id="calculator-logo">
 
-    <div class="container" id="calculator-container">
-        <img src="images/logo.png" alt="Nightreign Rune Calculator" id="calculator-logo">
+            <div class="input-group">
+                <label for="currentLevel">Your Current Level:</label>
+                <select id="currentLevel"></select>
+            </div>
 
-        <div class="input-group">
-            <label for="currentLevel">Your Current Level:</label>
-            <select id="currentLevel"></select>
+            <div class="input-group">
+                <label for="desiredLevel">Your Desired Level:</label>
+                <select id="desiredLevel"></select>
+            </div>
+
+            <button id="calculateBtn">Calculate Runes</button>
+
+            <div id="result"></div>
+            <div id="error"></div>
         </div>
-
-        <div class="input-group">
-            <label for="desiredLevel">Your Desired Level:</label>
-            <select id="desiredLevel"></select>
-        </div>
-
-        <button id="calculateBtn">Calculate Runes</button>
-
-        <div id="result"></div>
-        <div id="error"></div>
+        <div id="dynamic-image-layer"></div>
     </div>
 
-    <button id="swapLayoutBtn">Swap Layout</button>
+    <!-- Boss Countdown Start -->
+    <div id="boss-countdown" class="glass-card">
+        <div class="countdown-header">
+            <span class="countdown-title">
+                <span id="nextBossName" class="boss-upcoming"></span>
+            </span>
+            <span class="countdown-separator">|</span>
+            <span class="countdown-endtime" id="countdownEndTime"></span>
+        </div>
+        <div class="countdown-main">
+            <span class="countdown-current" id="currentBossMain">Darkdrift Knight</span>
+        </div>
+        <div class="countdown-digits-pixel" id="countdownDigits">
+            <span class="digit-group"><span id="days"></span></span>
+            <span class="digit-sep">:</span>
+            <span class="digit-group"><span id="hours"></span></span>
+            <span class="digit-sep">:</span>
+            <span class="digit-group"><span id="minutes"></span></span>
+            <span class="digit-sep">:</span>
+            <span class="digit-group"><span id="seconds"></span></span>
+        </div>
+        <span id="countdownStatusMessage" style="display:none;"></span>
+    </div>
+    <!-- Boss Countdown End -->
 
+    <button id="swapLayoutBtn">Swap Layout</button>
     <script src="script.js"></script>
 </body>
 
