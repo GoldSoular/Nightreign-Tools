@@ -143,22 +143,36 @@ swapLayoutBtn.addEventListener("click", () => {
 const bossRotations = [
   {
     name: "Gaping Maw",
-    start: "2025-06-19T22:00:00+09:00",
-    end: "2025-06-26T21:59:00+09:00",
+    start: "2025-06-19T10:00:00+09:00",
+    end: "2025-06-26T10:00:00+09:00",
   },
   {
     name: "Darkdrift Knight",
-    start: "2025-06-26T21:59:00+09:00",
-    end: "2025-07-03T21:59:00+09:00",
+    start: "2025-06-26T10:00:00+09:00",
+    end: "2025-07-03T10:00:00+09:00",
   },
   {
     name: "Sentient Pest",
-    start: "2025-07-03T21:59:00+09:00",
-    end: "2025-07-10T21:59:00+09:00",
+    start: "2025-07-03T10:00:00+09:00",
+    end: "2025-07-10T10:00:00+09:00",
+  },
+  {
+    name: "Boss 4",
+    start: "2025-07-10T10:00:00+09:00",
+    end: "2025-07-17T10:00:00+09:00",
+  },
+  {
+    name: "Boss 5",
+    start: "2025-07-17T10:00:00+09:00",
+    end: "2025-07-24T10:00:00+09:00",
+  },
+  {
+    name: "Boss 6",
+    start: "2025-07-24T10:00:00+09:00",
+    end: "2025-07-31T10:00:00+09:00",
   },
 ];
 
-// Helper to get current and next boss
 function getCurrentBoss(now) {
   for (let i = 0; i < bossRotations.length; i++) {
     const boss = bossRotations[i];
@@ -181,7 +195,7 @@ function updateBossCountdown() {
   document.getElementById("currentBossMain").textContent = boss.name;
   document.getElementById("nextBossName").textContent = nextBoss.name;
 
-  const displayEnd = new Date(end.getTime() + 60 * 1000);
+  const displayEnd = end;
 
   function getOrdinal(n) {
     const s = ["th", "st", "nd", "rd"],
@@ -234,6 +248,5 @@ function updateBossCountdown() {
   }
 }
 
-// Start countdown interval
 setInterval(updateBossCountdown, 1000);
 updateBossCountdown();
