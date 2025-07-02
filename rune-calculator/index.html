@@ -6,11 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nightreign Rune Calculator</title>
 
-    <link rel="icon" href="images/madness.png" type="image/png">
+    <link rel="icon" href="images/runes.png" type="image/png">
 
     <meta property="og:title" content="Nightreign Rune Calculator">
-    <meta property="og:description" content="Calculate Rune costs from 1 to 15 or inbetween">
-    <meta property="og:image" content="https://i.imgur.com/qjV5xXM.jpeg">
+    <meta property="og:description" content="Calculate Rune costs & Everdark Sovereign rotation">
+    <meta property="og:image" content="https://i.imgur.com/byxAg70.png">
     <meta property="og:url" content="https://goldsoular.github.io/Nightreign-Tools/rune-calculator/">
     <meta property="og:type" content="website">
     <meta property="og:locale" content="en_US">
@@ -46,12 +46,9 @@
         <div id="dynamic-image-layer"></div>
     </div>
 
-    <!-- Boss Countdown Start -->
-    <div id="boss-countdown" class="glass-card">
+    <div id="boss-countdown">
         <div class="countdown-header">
-            <span class="countdown-title">
-                <span id="nextBossName" class="boss-upcoming"></span>
-            </span>
+            <span id="nextBossName" class="boss-upcoming"></span>
             <span class="countdown-separator">|</span>
             <span class="countdown-endtime" id="countdownEndTime"></span>
         </div>
@@ -59,19 +56,21 @@
             <span class="countdown-current" id="currentBossMain">Darkdrift Knight</span>
         </div>
         <div class="countdown-digits-pixel" id="countdownDigits">
-            <span class="digit-group"><span id="days"></span></span>
-            <span class="digit-sep">:</span>
-            <span class="digit-group"><span id="hours"></span></span>
-            <span class="digit-sep">:</span>
-            <span class="digit-group"><span id="minutes"></span></span>
-            <span class="digit-sep">:</span>
-            <span class="digit-group"><span id="seconds"></span></span>
+            <span id="days"></span>
+            <span>:</span>
+            <span id="hours"></span>
+            <span>:</span>
+            <span id="minutes"></span>
+            <span>:</span>
+            <span id="seconds"></span>
         </div>
         <span id="countdownStatusMessage" style="display:none;"></span>
     </div>
-    <!-- Boss Countdown End -->
 
-    <button id="swapLayoutBtn">Swap Layout</button>
+    <button id="swapLayoutBtn">
+        <span style="font-size:1.3em;vertical-align:middle;">&#x21C4;</span>
+        <span style="margin-left:8px;vertical-align:middle;">Swap Layout</span>
+    </button>
     <script src="script.js"></script>
 </body>
 
