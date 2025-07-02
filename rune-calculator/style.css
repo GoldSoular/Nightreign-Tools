@@ -27,7 +27,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 24px; /* Set your desired gap */
+  gap: 24px;
   min-height: 80vh;
   width: 100vw;
   position: relative;
@@ -97,19 +97,9 @@ body {
   z-index: 3;
   flex-shrink: 0;
   transition: none;
-  padding: 40px 50px; /* Default padding, can override in media query */
+  padding: 40px 50px;
   width: 100%;
   max-width: 450px;
-}
-
-/* Only override what you need for mobile */
-@media (max-width: 1000px) {
-  #calculator-container {
-    width: 90vw;
-    max-width: 450px;
-    padding: 40px 20px;
-    margin: 0 auto;
-  }
 }
 
 #calculator-logo {
@@ -121,7 +111,7 @@ body {
 }
 
 .input-group {
-  margin-bottom: 20px; /* was 25px */
+  margin-bottom: 20px;
   text-align: left;
 }
 
@@ -210,8 +200,8 @@ button:active {
 }
 
 #result {
-  margin-top: 16px; /* was 35px */
-  padding: 12px 24px; /* was 20px */
+  margin-top: 16px;
+  padding: 12px 24px;
   background: var(--glass-message-bg);
   text-align: center;
   border: 1px solid var(--glass-border-dark);
@@ -248,8 +238,8 @@ button:active {
 }
 
 #error {
-  margin-top: 10px; /* was 25px */
-  padding: 10px; /* was 15px */
+  margin-top: 10px;
+  padding: 10px;
   background: var(--glass-message-bg);
   border: 1px solid var(--glass-border-dark);
   border-radius: 15px;
@@ -279,10 +269,10 @@ button:active {
     var(--button-gradient-end)
   );
   color: #fff;
-  padding: 20px;
+  padding: 10px;
   border: none;
-  border-radius: 10px 10px 0 0;
-  font-size: 1.1em;
+  border-radius: 0;
+  font-size: 1em;
   font-weight: bold;
   cursor: pointer;
   box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.4);
@@ -320,86 +310,6 @@ body.layout-swapped #dynamic-image-layer {
   background-position: center left;
 }
 
-/* Glassmorphism Countdown Section Styles */
-#countdown-section {
-  position: fixed; /* Keep it fixed relative to the viewport */
-  bottom: 20px; /* 20px from the bottom */
-  left: 50%; /* Start from the middle of the screen */
-  transform: translateX(
-    -50%
-  ); /* Pull it back by half its width to truly center */
-  z-index: 3; /* Puts it above the dark overlay and dynamic image, below calculator */
-
-  /* Glassmorphism styling */
-  background-color: rgba(
-    255,
-    255,
-    255,
-    0.1
-  ); /* Very light, transparent white background */
-  backdrop-filter: blur(10px); /* Blurs content behind it */
-  -webkit-backdrop-filter: blur(10px); /* For Safari compatibility */
-  border: 1px solid rgba(255, 255, 255, 0.2); /* Subtle white border */
-  border-radius: 12px; /* Slightly more rounded corners for glass effect */
-
-  padding: 10px 15px; /* Reduced padding */
-  text-align: center;
-  color: #fff; /* White text */
-  max-width: 350px; /* Keep the container smaller */
-  font-family: Arial, sans-serif; /* Simple font for general countdown text */
-
-  /* Add transition for smooth movement when layout swaps */
-  transition: left 0.5s ease-in-out, transform 0.5s ease-in-out;
-}
-
-/* Rule to make the countdown move when body has 'layout-swapped' */
-body.layout-swapped #countdown-section {
-  left: 15%; /* Moves the countdown to the left, aligning with dynamic-image-layer's shift */
-  transform: translateX(0); /* Remove the centering transform */
-}
-
-#countdown-info p {
-  margin: 0;
-  line-height: 1.4;
-  font-size: 0.95em;
-}
-
-#currentBossDisplay {
-  /* "Current Everdark Sovereign:" will use Arial (from #countdown-section), but the span inside will be Cinzel */
-  color: #e0f7fa; /* Lighter cyan for current boss label */
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-
-/* Apply Cinzel only to the actual boss names */
-#currentBossNameText,
-#nextBossNameText {
-  font-family: "Cinzel", serif;
-  font-weight: bold;
-  font-size: 1.2em;
-  color: var(--accent-color);
-}
-
-#nextBossCountdownDisplay {
-  color: #fff;
-}
-
-#countdown-timer-inline {
-  display: inline-block;
-  font-family: "Consolas", "Courier New", monospace; /* Monospace for numbers */
-  font-size: 1em;
-  color: #ffd700; /* Gold for countdown numbers */
-  font-weight: bold;
-  text-shadow: none; /* Removed text shadow for cleaner glass effect */
-  margin-left: 4px;
-}
-
-#countdownStatusMessage {
-  color: #cfd8dc; /* Lighter greyish color for status message */
-  font-size: 0.95em;
-  margin-left: 8px;
-}
-
 #boss-countdown {
   position: relative;
   z-index: 10;
@@ -407,50 +317,11 @@ body.layout-swapped #countdown-section {
   text-align: center;
 }
 
-/* Modern countdown style */
-.modern-countdown {
-  margin: 0 auto 2em auto;
-  max-width: 420px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 22px;
-  box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.18);
-  padding: 24px 18px 18px 18px;
-  text-align: left;
-  position: relative;
-  z-index: 10;
-  font-family: "Poppins", "Arial", sans-serif;
-}
-
-.glass-card {
-  max-width: 400px; /* Increased width */
-  margin: 24px auto 1.5em auto;
-  position: relative;
-  z-index: 10;
-  font-family: "Poppins", "Arial", sans-serif;
-  user-select: none;
-}
-
-/* Header and boss info */
-.countdown-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 0px;
-  gap: 0px; /* space between items */
-}
-
 .countdown-separator {
   color: #aaa;
   font-size: 1.2em;
   font-weight: 600;
   visibility: hidden;
-}
-
-.countdown-title,
-.countdown-endtime {
-  display: inline-block;
-  text-align: center;
 }
 
 .boss-upcoming {
@@ -466,7 +337,7 @@ body.layout-swapped #countdown-section {
   border-radius: 6px;
   font-size: 1em;
   font-weight: 600;
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", serif;
 }
 
 .countdown-main {
@@ -477,7 +348,6 @@ body.layout-swapped #countdown-section {
   letter-spacing: 1px;
 }
 
-/* Digital timer pill */
 .countdown-digits-pixel {
   display: flex;
   justify-content: center;
@@ -501,83 +371,6 @@ body.layout-swapped #countdown-section {
   overflow: hidden;
 }
 
-#countdownStatusMessage {
-  color: #cfd8dc;
-  font-size: 0.95em;
-  margin-left: 8px;
-}
-
-.pixel-card {
-  background: #fff;
-  border-radius: 24px;
-  box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.1);
-  padding: 28px 22px 22px 22px;
-  max-width: 440px;
-  margin: 40px auto 2em auto;
-  position: relative;
-  z-index: 10;
-  font-family: "Poppins", "Arial", sans-serif;
-}
-
-.pixel-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.pixel-card-title {
-  font-size: 1em;
-  font-weight: 500;
-  color: #222;
-  letter-spacing: 1px;
-}
-
-.pixel-card-main {
-  font-size: 2.1em;
-  font-weight: 700;
-  color: #222;
-  margin-bottom: 22px;
-  letter-spacing: 1px;
-}
-
-.pixel-card-digits {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #181818;
-  border-radius: 20px;
-  padding: 18px 0;
-  font-family: "DotGothic16", monospace, "Courier New", Courier;
-  font-size: 2.6em;
-  font-weight: bold;
-  color: #f8f9f3;
-  letter-spacing: 8px;
-  margin-bottom: 0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
-}
-
-.pixel-digit-group {
-  min-width: 48px;
-  text-align: center;
-}
-
-.pixel-digit-sep {
-  font-size: 1em;
-  color: #fff;
-  margin: 0 6px;
-  opacity: 0.7;
-  font-family: "DotGothic16", monospace, "Courier New", Courier;
-}
-
-#countdownStatusMessage {
-  display: block;
-  text-align: center;
-  color: #ff4d5a;
-  font-size: 1em;
-  margin-top: 10px;
-}
-
 /* ==================================== */
 /* === MOBILE MEDIA QUERY STYLES ==== */
 /* ==================================== */
@@ -593,43 +386,32 @@ body.layout-swapped #countdown-section {
   }
 
   #dynamic-image-layer {
-    display: none; /* Hide the image layer on mobile */
+    display: none;
   }
 
-  .mobile-center-wrapper {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 40px; /* push down from top */
-    margin-bottom: 100px; /* leave space for countdown at bottom */
+  .center-flex-row {
+    min-height: unset;
+  }
+
+  #calculator-container,
+  #boss-countdown {
+    width: 90vw;
+    max-width: 425px;
+    box-sizing: border-box;
+    margin: 0 auto;
   }
 
   #calculator-container {
-    position: static;
-    left: auto;
-    right: auto;
-    top: auto;
-    transform: none;
-    margin: 0 auto;
-    width: 90vw;
-    max-width: 450px;
-    padding: 40px 50px;
-    box-sizing: border-box;
-    height: auto;
-    flex-shrink: 0;
-    z-index: 3;
+    margin: 24px auto 16px auto;
+    padding: 32px;
   }
 
   #boss-countdown {
-    position: fixed;
-    left: 50%;
-    bottom: 80px;
-    transform: translateX(-50%);
-    width: 90vw;
-    max-width: 425px;
+    margin: auto 0px 18px 0px;
+    position: relative;
+    left: auto;
+    bottom: auto;
+    transform: none;
     z-index: 10;
     border-radius: 20px;
     border: 1px solid var(--glass-border-light);
@@ -637,9 +419,9 @@ body.layout-swapped #countdown-section {
       inset 0 0 0 1px rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(42px);
     -webkit-backdrop-filter: blur(42px);
-    padding: 24px 10px 18px 10px;
     text-align: center;
     color: var(--text-color);
+    padding: 16px;
   }
 
   #swapLayoutBtn {
