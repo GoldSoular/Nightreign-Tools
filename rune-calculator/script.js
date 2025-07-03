@@ -203,7 +203,7 @@ function updateBossCountdown() {
 
   document.getElementById("currentBossMain").textContent = boss.name;
   document.getElementById("nextBossName").textContent =
-    nextBoss.name === "Equilibrious Beast" ? "Libra" : nextBoss.name; // <-- Ensures upcoming boss is shown
+    nextBoss.name === "Equilibrious Beast" ? "Libra" : nextBoss.name;
 
   const affinityImg = document.getElementById("currentBossAffinity");
   const affinitySrc = bossAffinities[boss.name] || "";
@@ -211,7 +211,6 @@ function updateBossCountdown() {
   affinityImg.alt = boss.name + " Affinity";
   affinityImg.style.display = affinitySrc ? "inline-block" : "none";
 
-  // After you set the affinity image:
   const affinityName = bossAffinities[boss.name]
     ? bossAffinities[boss.name]
         .split("/")
@@ -219,11 +218,11 @@ function updateBossCountdown() {
         .replace(".jpg", "")
         .replace(/^\w/, (c) => c.toUpperCase())
     : "";
+  const digits = document.getElementById("countdownDigits");
   document
     .getElementById("countdownDigits")
     .setAttribute("data-affinity", affinityName);
 
-  const digits = document.getElementById("countdownDigits");
   const weaknessMessage = document.getElementById("weaknessMessage");
   digits.setAttribute("data-affinity", affinityName);
 
@@ -244,7 +243,7 @@ function updateBossCountdown() {
     case "holy":
       affinityClass = "affinity-holy";
       break;
-    // add more as needed
+    // please devs add a non yellow affinity im begging
     default:
       affinityClass = "";
   }
@@ -271,18 +270,15 @@ function updateBossCountdown() {
   if (!bossCountdown._tapHandlerAdded) {
     bossCountdown.addEventListener("click", function (e) {
       if (isMobile()) {
-        // Use current values from inside updateBossCountdown
         const digits = document.getElementById("countdownDigits");
-        const affinityName = digits.getAttribute("data-affinity");
-        if (affinityName) {
-          const isShowing = digits.classList.contains("show-weakness");
-          digits.classList.toggle("show-weakness", !isShowing);
+        const currentAffinityName = digits.getAttribute("data-affinity");
+        if (currentAffinityName) {
+          digits.classList.toggle("show-weakness");
         }
-        // Prevent text selection on double tap
         e.preventDefault();
       }
     });
-    // Hide weakness message if user taps outside boss-countdown
+
     document.addEventListener("click", function (e) {
       if (isMobile() && !bossCountdown.contains(e.target)) {
         document
@@ -348,34 +344,65 @@ function updateBossCountdown() {
 
 // Mobile tap-to-toggle for weakness message
 const bossCountdown = document.getElementById("boss-countdown");
-let weaknessVisible = false;
 
 function isMobile() {
   return window.matchMedia("(max-width: 1000px)").matches;
 }
 
-bossCountdown.addEventListener("click", function (e) {
-  if (isMobile()) {
-    weaknessVisible = !digits.classList.contains("show-weakness");
-    if (weaknessVisible && affinityName) {
-      digits.classList.add("show-weakness");
-    } else {
-      digits.classList.remove("show-weakness");
-    }
-    // Prevent text selection on double tap
-    e.preventDefault();
+let resistanceImgElem = null;
+let isResistanceImageVisible = false;
+
+function showResistanceImage(bossName) {
+  if (resistanceImgElem) {
+    resistanceImgElem.remove();
+    resistanceImgElem = null;
   }
+  if (window.matchMedia("(max-width: 1000px)").matches) return;
+  if (!bossName) return;
+
+  const img = document.createElement("img");
+  img.src = `images/resistances/${bossName}.png`;
+  img.alt = bossName + " Resistances";
+  img.className = "boss-resistance-img";
+  document.body.appendChild(img);
+  resistanceImgElem = img;
+  isResistanceImageVisible = true;
+}
+
+function hideResistanceImage() {
+  if (resistanceImgElem) {
+    resistanceImgElem.remove();
+    resistanceImgElem = null;
+    isResistanceImageVisible = false;
+  }
+}
+
+const countdownCurrent = document.getElementById("countdownCurrent");
+
+countdownCurrent.addEventListener("click", function (event) {
+  if (isMobile()) return;
+
+  const bossName = document
+    .getElementById("currentBossMain")
+    .textContent.trim();
+
+  if (isResistanceImageVisible) {
+    hideResistanceImage();
+  } else {
+    showResistanceImage(bossName);
+  }
+  event.stopPropagation();
 });
 
-// Optional: Hide weakness message if user taps outside boss-countdown
-document.addEventListener("click", function (e) {
-  if (
-    isMobile() &&
-    !bossCountdown.contains(e.target) &&
-    digits.classList.contains("show-weakness")
-  ) {
-    digits.classList.remove("show-weakness");
-    weaknessVisible = false;
+document.addEventListener("click", function (event) {
+  if (!isMobile() && isResistanceImageVisible) {
+    if (
+      resistanceImgElem &&
+      !resistanceImgElem.contains(event.target) &&
+      !countdownCurrent.contains(event.target)
+    ) {
+      hideResistanceImage();
+    }
   }
 });
 
