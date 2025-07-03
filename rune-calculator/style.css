@@ -26,7 +26,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 24px;
+  gap: 0px;
   min-height: 80vh;
   width: 100vw;
   position: relative;
@@ -56,7 +56,7 @@ body {
 }
 
 #dynamic-image-layer {
-  position: static;
+  position: relative;
   width: 40vw;
   max-width: 600px;
   min-width: 320px;
@@ -66,7 +66,15 @@ body {
   background-position: center right;
   background-repeat: no-repeat;
   z-index: 2;
-  transition: background-position 0.7s ease-in-out;
+}
+
+#dynamic-image-hover-area {
+  position: absolute;
+  top: 15%;
+  left: 15%;
+  width: 70%;
+  height: 70%;
+  z-index: 3;
 }
 
 #dark-overlay {
@@ -80,7 +88,7 @@ body {
 }
 
 #calculator-container {
-  position: static;
+  position: relative;
   left: auto;
   right: auto;
   top: auto;
@@ -300,12 +308,10 @@ button:active {
 
 body.layout-swapped #calculator-container {
   left: auto;
-  right: 20%;
 }
 
 body.layout-swapped #dynamic-image-layer {
   right: auto;
-  left: 15%;
   background-position: center left;
 }
 
@@ -463,6 +469,23 @@ body.layout-swapped #dynamic-image-layer {
 }
 .affinity-poison {
   color: #3fdf3f;
+}
+
+.boss-resistance-img {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%) translateY(0%);
+  z-index: 1000;
+  max-width: 100%;
+  width: 70vw;
+  min-width: 180px;
+  box-shadow: 0 4px 24px #000a, 0 1.5px 0 #fff2 inset;
+  border-radius: 12px;
+  background: #181c22e6;
+  padding: 8px 12px 10px 12px;
+  pointer-events: none;
+  transition: opacity 0.25s;
 }
 
 /* ==================================== */
