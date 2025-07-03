@@ -25,7 +25,7 @@
 <body>
     <div id="dark-overlay"></div>
     <div class="center-flex-row">
-        <div class="container" id="calculator-container">
+        <div id="calculator-container">
             <img src="images/logo.png" alt="Nightreign Rune Calculator" id="calculator-logo">
 
             <div class="input-group">
@@ -53,18 +53,22 @@
             <span class="countdown-endtime" id="countdownEndTime"></span>
         </div>
         <div class="countdown-main">
-            <span class="countdown-current" id="currentBossMain">Darkdrift Knight</span>
+            <span class="countdown-current" id="countdownCurrent">
+                <img id="currentBossAffinity" src="" alt="Affinity" class="affinity-icon">
+                <span id="currentBossMain"></span>
+            </span>
         </div>
-        <div class="countdown-digits-pixel" id="countdownDigits">
+        <div class="countdown-digits" id="countdownDigits" data-affinity="">
             <span id="days"></span>
-            <span>:</span>
+            <span class="colon">:</span>
             <span id="hours"></span>
-            <span>:</span>
+            <span class="colon">:</span>
             <span id="minutes"></span>
-            <span>:</span>
+            <span class="colon">:</span>
             <span id="seconds"></span>
+            <span class="weakness-message" id="weaknessMessage"></span>
         </div>
-        <span id="countdownStatusMessage" style="display:none;"></span>
+        <span id="countdownStatusMessage"></span>
     </div>
 
     <button id="swapLayoutBtn">
