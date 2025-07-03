@@ -26,24 +26,28 @@
     <div id="dark-overlay"></div>
     <div class="center-flex-row">
         <div id="calculator-container">
-            <img src="images/logo.png" alt="Nightreign Rune Calculator" id="calculator-logo">
+            <div id="calculator-content">
+                <img src="images/logo.png" alt="Nightreign Rune Calculator" id="calculator-logo">
 
-            <div class="input-group">
-                <label for="currentLevel">Your Current Level:</label>
-                <select id="currentLevel"></select>
+                <div class="input-group">
+                    <label for="currentLevel">Your Current Level:</label>
+                    <select id="currentLevel"></select>
+                </div>
+
+                <div class="input-group">
+                    <label for="desiredLevel">Your Desired Level:</label>
+                    <select id="desiredLevel"></select>
+                </div>
+
+                <button id="calculateBtn">Calculate Runes</button>
+
+                <div id="result"></div>
+                <div id="error"></div>
             </div>
-
-            <div class="input-group">
-                <label for="desiredLevel">Your Desired Level:</label>
-                <select id="desiredLevel"></select>
-            </div>
-
-            <button id="calculateBtn">Calculate Runes</button>
-
-            <div id="result"></div>
-            <div id="error"></div>
         </div>
-        <div id="dynamic-image-layer"></div>
+        <div id="dynamic-image-layer">
+            <div id="dynamic-image-hover-area"></div>
+        </div>
     </div>
 
     <div id="boss-countdown">
