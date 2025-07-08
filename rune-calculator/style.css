@@ -350,6 +350,7 @@ body.layout-swapped #dynamic-image-layer {
   font-family: "Cinzel", serif;
   color: var(--gold-color);
   letter-spacing: 1px;
+  margin-top: 6px;
 }
 
 .countdown-digits {
@@ -474,7 +475,7 @@ body.layout-swapped #dynamic-image-layer {
 .boss-resistance-img {
   position: fixed;
   left: 50%;
-  bottom: 32px;
+  bottom: 55px;
   transform: translateX(-50%) translateY(0%);
   z-index: 1000;
   max-width: 100%;
@@ -485,7 +486,14 @@ body.layout-swapped #dynamic-image-layer {
   background: #181c22e6;
   padding: 8px 12px 10px 12px;
   pointer-events: none;
+  opacity: 0;
+  display: flex;
   transition: opacity 0.25s;
+}
+
+.boss-resistance-img.visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 /* ==================================== */
@@ -560,6 +568,7 @@ body.layout-swapped #dynamic-image-layer {
 
   .countdown-main {
     font-size: min(7vw, 1.4em);
+    margin-top: 14px;
   }
 
   .countdown-endtime {
