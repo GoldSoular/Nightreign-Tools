@@ -142,32 +142,22 @@ swapLayoutBtn.addEventListener("click", () => {
 // Boss rotation data
 const bossRotations = [
   {
-    name: "Gaping Maw",
-    start: "2025-06-19T10:00:00+09:00",
-    end: "2025-06-26T10:00:00+09:00",
-  },
-  {
-    name: "Darkdrift Knight",
-    start: "2025-06-26T10:00:00+09:00",
-    end: "2025-07-03T10:00:00+09:00",
-  },
-  {
-    name: "Sentient Pest",
+    bosses: ["Sentient Pest"],
     start: "2025-07-03T10:00:00+09:00",
     end: "2025-07-10T10:00:00+09:00",
   },
   {
-    name: "Boss 4",
+    bosses: ["Gaping Maw", "Darkdrift Knight"],
     start: "2025-07-10T10:00:00+09:00",
     end: "2025-07-17T10:00:00+09:00",
   },
   {
-    name: "Boss 5",
+    bosses: ["Sentient Pest", "Darkdrift Knight"],
     start: "2025-07-17T10:00:00+09:00",
     end: "2025-07-24T10:00:00+09:00",
   },
   {
-    name: "Boss 6",
+    bosses: ["Gaping Maw", "Sentient Pest"],
     start: "2025-07-24T10:00:00+09:00",
     end: "2025-07-31T10:00:00+09:00",
   },
@@ -182,112 +172,147 @@ const bossAffinities = {
   Caligo: "images/affinities/fire.jpg",
 };
 
-function getCurrentBoss(now) {
+function getCurrentBosses(now) {
   for (let i = 0; i < bossRotations.length; i++) {
-    const boss = bossRotations[i];
-    const start = new Date(boss.start);
-    const end = new Date(boss.end);
+    const rotation = bossRotations[i];
+    const start = new Date(rotation.start);
+    const end = new Date(rotation.end);
     if (now >= start && now < end) {
-      const nextBoss = bossRotations[(i + 1) % bossRotations.length];
-      return { boss, nextBoss };
+      const nextRotation = bossRotations[(i + 1) % bossRotations.length];
+      return { bosses: rotation.bosses, nextBosses: nextRotation.bosses, end };
     }
   }
   // If none match, show the next upcoming
-  return { boss: bossRotations[0], nextBoss: bossRotations[1] };
+  return {
+    bosses: bossRotations[0].bosses,
+    nextBosses: bossRotations[1].bosses,
+    end: new Date(bossRotations[0].end),
+  };
 }
 
 function updateBossCountdown() {
   const now = new Date();
-  const { boss, nextBoss } = getCurrentBoss(now);
-  const end = new Date(boss.end);
+  const { bosses, nextBosses, end } = getCurrentBosses(now);
 
-  document.getElementById("currentBossMain").textContent = boss.name;
-  document.getElementById("nextBossName").textContent =
-    nextBoss.name === "Equilibrious Beast" ? "Libra" : nextBoss.name;
-
+  // First boss line
+  document.getElementById("currentBossMain").textContent = bosses[0] || "";
   const affinityImg = document.getElementById("currentBossAffinity");
-  const affinitySrc = bossAffinities[boss.name] || "";
+  const affinitySrc = bossAffinities[bosses[0]] || "";
   affinityImg.src = affinitySrc;
-  affinityImg.alt = boss.name + " Affinity";
+  affinityImg.alt = (bosses[0] || "") + " Affinity";
   affinityImg.style.display = affinitySrc ? "inline-block" : "none";
 
-  const affinityName = bossAffinities[boss.name]
-    ? bossAffinities[boss.name]
-        .split("/")
-        .pop()
-        .replace(".jpg", "")
-        .replace(/^\w/, (c) => c.toUpperCase())
-    : "";
-  const digits = document.getElementById("countdownDigits");
-  document
-    .getElementById("countdownDigits")
-    .setAttribute("data-affinity", affinityName);
+  // Second boss line
+  document.getElementById("currentBossMain2").textContent = bosses[1] || "";
+  const affinityImg2 = document.getElementById("currentBossAffinity2");
+  const affinitySrc2 = bossAffinities[bosses[1]] || "";
+  affinityImg2.src = affinitySrc2;
+  affinityImg2.alt = (bosses[1] || "") + " Affinity";
+  affinityImg2.style.display = affinitySrc2 ? "inline-block" : "none";
+
+  // Next boss (for header)
+  document.getElementById("nextBossName").textContent = nextBosses.join(" & ");
+
+  // Hover effect for both boss lines
+  const bossNameElem1 = document.getElementById("countdownCurrent");
+  const bossNameElem2 = document.getElementById("countdownCurrent2");
+
+  // Remove previous event listeners by resetting them to null
+  bossNameElem1.onmouseenter = null;
+  bossNameElem1.onmouseleave = null;
+  bossNameElem1.onclick = null;
+  bossNameElem2.onmouseenter = null;
+  bossNameElem2.onmouseleave = null;
+  bossNameElem2.onclick = null;
 
   const weaknessMessage = document.getElementById("weaknessMessage");
-  digits.setAttribute("data-affinity", affinityName);
+  const digits = document.getElementById("countdownDigits");
 
-  let affinityClass = "";
-  switch (affinityName.toLowerCase()) {
-    case "fire":
-      affinityClass = "affinity-fire";
-      break;
-    case "lightning":
-      affinityClass = "affinity-lightning";
-      break;
-    case "poison":
-      affinityClass = "affinity-poison";
-      break;
-    case "madness":
-      affinityClass = "affinity-madness";
-      break;
-    case "holy":
-      affinityClass = "affinity-holy";
-      break;
-    // please devs add a non yellow affinity im begging
-    default:
-      affinityClass = "";
-  }
-  weaknessMessage.innerHTML = affinityName
-    ? `Weak to&nbsp;<span class="${affinityClass}">${affinityName}</span>`
-    : "";
-
-  // Show/hide weakness message on boss name hover (desktop only)
-  const bossNameElem = document.getElementById("countdownCurrent");
-
-  if (!isMobile()) {
-    bossNameElem.onmouseenter = () => {
-      if (affinityName) digits.classList.add("show-weakness");
-    };
-    bossNameElem.onmouseleave = () => {
-      digits.classList.remove("show-weakness");
-    };
-  } else {
-    bossNameElem.onmouseenter = null;
-    bossNameElem.onmouseleave = null;
+  function getAffinityInfo(bossName) {
+    const src = bossAffinities[bossName] || "";
+    const name = src
+      ? src
+          .split("/")
+          .pop()
+          .replace(".jpg", "")
+          .replace(/^\w/, (c) => c.toUpperCase())
+      : "";
+    let affinityClass = "";
+    switch (name.toLowerCase()) {
+      case "fire":
+        affinityClass = "affinity-fire";
+        break;
+      case "lightning":
+        affinityClass = "affinity-lightning";
+        break;
+      case "poison":
+        affinityClass = "affinity-poison";
+        break;
+      case "madness":
+        affinityClass = "affinity-madness";
+        break;
+      case "holy":
+        affinityClass = "affinity-holy";
+        break;
+      default:
+        affinityClass = "";
+    }
+    return { name, affinityClass };
   }
 
-  // --- MOBILE TAP-TO-TOGGLE LOGIC ---
-  if (!bossCountdown._tapHandlerAdded) {
-    bossCountdown.addEventListener("click", function (e) {
-      if (isMobile()) {
-        const digits = document.getElementById("countdownDigits");
-        const currentAffinityName = digits.getAttribute("data-affinity");
-        if (currentAffinityName) {
-          digits.classList.toggle("show-weakness");
-        }
-        e.preventDefault();
-      }
-    });
+  bossNameElem1.onmouseenter = () => {
+    const bossName = document
+      .getElementById("currentBossMain")
+      .textContent.trim();
+    const { name, affinityClass } = getAffinityInfo(bossName);
+    weaknessMessage.innerHTML = name
+      ? `Weak to&nbsp;<span class='${affinityClass}'>${name}</span>`
+      : "";
+    digits.classList.add("show-weakness");
+  };
+  bossNameElem1.onmouseleave = () => {
+    digits.classList.remove("show-weakness");
+    weaknessMessage.innerHTML = "";
+  };
+  bossNameElem1.onclick = function (event) {
+    if (isMobile()) return;
+    const bossName = document
+      .getElementById("currentBossMain")
+      .textContent.trim();
+    if (isResistanceImageVisible) {
+      hideResistanceImage();
+    } else {
+      showResistanceImage(bossName);
+    }
+    event.stopPropagation();
+  };
 
-    document.addEventListener("click", function (e) {
-      if (isMobile() && !bossCountdown.contains(e.target)) {
-        document
-          .getElementById("countdownDigits")
-          .classList.remove("show-weakness");
-      }
-    });
-    bossCountdown._tapHandlerAdded = true;
-  }
+  bossNameElem2.onmouseenter = () => {
+    const bossName = document
+      .getElementById("currentBossMain2")
+      .textContent.trim();
+    const { name, affinityClass } = getAffinityInfo(bossName);
+    weaknessMessage.innerHTML = name
+      ? `Weak to&nbsp;<span class='${affinityClass}'>${name}</span>`
+      : "";
+    digits.classList.add("show-weakness");
+  };
+  bossNameElem2.onmouseleave = () => {
+    digits.classList.remove("show-weakness");
+    weaknessMessage.innerHTML = "";
+  };
+  bossNameElem2.onclick = function (event) {
+    if (isMobile()) return;
+    const bossName = document
+      .getElementById("currentBossMain2")
+      .textContent.trim();
+    if (isResistanceImageVisible) {
+      hideResistanceImage();
+    } else {
+      showResistanceImage(bossName);
+    }
+    event.stopPropagation();
+  };
 
   const displayEnd = end;
 
@@ -313,7 +338,7 @@ function updateBossCountdown() {
 
   document.getElementById(
     "countdownEndTime"
-  ).textContent = `${month} ${day}, ${timeStr}`;
+  ).textContent = `Arriving ${month} ${day}, ${timeStr}`;
 
   // Calculate time left
   const diff = end - now;
@@ -353,53 +378,50 @@ let resistanceImgElem = null;
 let isResistanceImageVisible = false;
 
 function showResistanceImage(bossName) {
-  if (resistanceImgElem) {
-    resistanceImgElem.remove();
-    resistanceImgElem = null;
-  }
-  if (window.matchMedia("(max-width: 1000px)").matches) return;
   if (!bossName) return;
+  if (window.matchMedia("(max-width: 1000px)").matches) return;
 
-  const img = document.createElement("img");
-  img.src = `images/resistances/${bossName}.png`;
-  img.alt = bossName + " Resistances";
-  img.className = "boss-resistance-img";
-  document.body.appendChild(img);
-  resistanceImgElem = img;
+  if (!resistanceImgElem) {
+    resistanceImgElem = document.createElement("img");
+    resistanceImgElem.className = "boss-resistance-img";
+    document.body.appendChild(resistanceImgElem);
+  }
+  resistanceImgElem.src = `images/resistances/${bossName}.png`;
+  resistanceImgElem.alt = bossName + " Resistances";
+  resistanceImgElem.classList.add("visible");
   isResistanceImageVisible = true;
 }
 
 function hideResistanceImage() {
   if (resistanceImgElem) {
-    resistanceImgElem.remove();
-    resistanceImgElem = null;
+    resistanceImgElem.classList.remove("visible");
     isResistanceImageVisible = false;
+    resistanceImgElem.addEventListener(
+      "transitionend",
+      function handler(e) {
+        if (
+          e.propertyName === "opacity" &&
+          !resistanceImgElem.classList.contains("visible")
+        ) {
+          resistanceImgElem.remove();
+          resistanceImgElem = null;
+          resistanceImgElem?.removeEventListener("transitionend", handler);
+        }
+      },
+      { once: true }
+    );
   }
 }
 
-const countdownCurrent = document.getElementById("countdownCurrent");
-
-countdownCurrent.addEventListener("click", function (event) {
-  if (isMobile()) return;
-
-  const bossName = document
-    .getElementById("currentBossMain")
-    .textContent.trim();
-
-  if (isResistanceImageVisible) {
-    hideResistanceImage();
-  } else {
-    showResistanceImage(bossName);
-  }
-  event.stopPropagation();
-});
-
 document.addEventListener("click", function (event) {
   if (!isMobile() && isResistanceImageVisible) {
+    const bossNameElem1 = document.getElementById("countdownCurrent");
+    const bossNameElem2 = document.getElementById("countdownCurrent2");
     if (
       resistanceImgElem &&
       !resistanceImgElem.contains(event.target) &&
-      !countdownCurrent.contains(event.target)
+      !bossNameElem1.contains(event.target) &&
+      !bossNameElem2.contains(event.target)
     ) {
       hideResistanceImage();
     }
