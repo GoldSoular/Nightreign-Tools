@@ -51,15 +51,15 @@
     </div>
 
     <div id="boss-countdown">
-        <div class="countdown-header">
-            <span id="nextBossName" class="boss-upcoming"></span>
-            <span class="countdown-separator">|</span>
-            <span class="countdown-endtime" id="countdownEndTime"></span>
-        </div>
         <div class="countdown-main">
             <span class="countdown-current" id="countdownCurrent">
                 <img id="currentBossAffinity" src="" alt="Affinity" class="affinity-icon">
                 <span id="currentBossMain"></span>
+            </span>
+            <br>
+            <span class="countdown-current" id="countdownCurrent2">
+                <img id="currentBossAffinity2" src="" alt="Affinity" class="affinity-icon">
+                <span id="currentBossMain2"></span>
             </span>
         </div>
         <div class="countdown-digits" id="countdownDigits" data-affinity="">
@@ -71,6 +71,12 @@
             <span class="colon">:</span>
             <span id="seconds"></span>
             <span class="weakness-message" id="weaknessMessage"></span>
+        </div>
+        <div class="countdown-header">
+            <span id="nextBossName" class="boss-upcoming"></span>
+            <span class="countdown-separator">|</span>
+            <br>
+            <span class="countdown-endtime" id="countdownEndTime"></span>
         </div>
         <span id="countdownStatusMessage"></span>
     </div>
