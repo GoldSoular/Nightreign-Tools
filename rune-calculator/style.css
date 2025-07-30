@@ -318,6 +318,7 @@ body.layout-swapped #dynamic-image-layer {
 #boss-countdown {
   position: relative;
   z-index: 10;
+  bottom: 50px;
   text-align: center;
 }
 
@@ -475,7 +476,7 @@ body.layout-swapped #dynamic-image-layer {
 .boss-resistance-img {
   position: fixed;
   left: 50%;
-  bottom: 55px;
+  bottom: 80px;
   transform: translateX(-50%) translateY(0%);
   z-index: 1000;
   max-width: 100%;
