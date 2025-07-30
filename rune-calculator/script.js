@@ -143,23 +143,43 @@ swapLayoutBtn.addEventListener("click", () => {
 const bossRotations = [
   {
     bosses: ["Sentient Pest"],
-    start: "2025-07-03T10:00:00+09:00",
-    end: "2025-07-10T10:00:00+09:00",
+    start: "2025-07-04T10:00:00+09:00",
+    end: "2025-07-11T10:00:00+09:00",
   },
   {
     bosses: ["Gaping Maw", "Darkdrift Knight"],
-    start: "2025-07-10T10:00:00+09:00",
-    end: "2025-07-17T10:00:00+09:00",
+    start: "2025-07-11T10:00:00+09:00",
+    end: "2025-07-18T10:00:00+09:00",
   },
   {
     bosses: ["Sentient Pest", "Darkdrift Knight"],
-    start: "2025-07-17T10:00:00+09:00",
-    end: "2025-07-24T10:00:00+09:00",
+    start: "2025-07-18T10:00:00+09:00",
+    end: "2025-07-25T10:00:00+09:00",
   },
   {
     bosses: ["Gaping Maw", "Sentient Pest"],
-    start: "2025-07-24T10:00:00+09:00",
-    end: "2025-07-31T10:00:00+09:00",
+    start: "2025-07-25T10:00:00+09:00",
+    end: "2025-08-01T10:00:00+09:00",
+  },
+  {
+    bosses: ["Augur"],
+    start: "2025-08-01T10:00:00+09:00",
+    end: "2025-08-08T10:00:00+09:00",
+  },
+  {
+    bosses: ["Tricephalos"],
+    start: "2025-08-08T10:00:00+09:00",
+    end: "2025-08-15T10:00:00+09:00",
+  },
+  {
+    bosses: ["Equilibrious Beast"],
+    start: "2025-08-15T10:00:00+09:00",
+    end: "2025-08-22T10:00:00+09:00",
+  },
+  {
+    bosses: ["Caligo"],
+    start: "2025-08-22T10:00:00+09:00",
+    end: "2025-08-29T10:00:00+09:00",
   },
 ];
 
@@ -168,8 +188,9 @@ const bossAffinities = {
   "Darkdrift Knight": "images/affinities/lightning.jpg",
   "Sentient Pest": "images/affinities/fire.jpg",
   "Equilibrious Beast": "images/affinities/madness.jpg",
-  Augur: "images/affinities/lightning.jpg",
-  Caligo: "images/affinities/fire.jpg",
+  "Augur": "images/affinities/lightning.jpg",
+  "Caligo": "images/affinities/fire.jpg",
+  "Tricephalos": "images/affinities/holy.jpg",
 };
 
 function getCurrentBosses(now) {
