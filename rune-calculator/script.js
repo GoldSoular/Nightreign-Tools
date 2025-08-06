@@ -162,24 +162,29 @@ const bossRotations = [
     end: "2025-08-01T10:00:00+09:00",
   },
   {
-    bosses: ["Augur"],
+    bosses: ["Augur", "Darkdrift Knight"],
     start: "2025-08-01T10:00:00+09:00",
-    end: "2025-08-08T10:00:00+09:00",
+    end: "2025-08-07T10:00:00+09:00",
   },
   {
-    bosses: ["Tricephalos"],
-    start: "2025-08-08T10:00:00+09:00",
-    end: "2025-08-15T10:00:00+09:00",
+    bosses: ["Caligo", "Gaping Maw"],
+    start: "2025-08-07T10:00:00+09:00",
+    end: "2025-08-14T10:00:00+09:00",
   },
   {
-    bosses: ["Equilibrious Beast"],
-    start: "2025-08-15T10:00:00+09:00",
-    end: "2025-08-22T10:00:00+09:00",
+    bosses: ["Tricephalos", "Sentient Pest"],
+    start: "2025-08-14T10:00:00+09:00",
+    end: "2025-08-21T10:00:00+09:00",
   },
   {
-    bosses: ["Caligo"],
-    start: "2025-08-22T10:00:00+09:00",
-    end: "2025-08-29T10:00:00+09:00",
+    bosses: ["Equilibrious Beast", "Darkdrift Knight"],
+    start: "2025-08-21T10:00:00+09:00",
+    end: "2025-08-28T10:00:00+09:00",
+  },
+  {
+    bosses: ["Heolstor"],
+    start: "2025-08-28T10:00:00+09:00",
+    end: "2025-09-04T10:00:00+09:00",
   },
 ];
 
@@ -191,6 +196,7 @@ const bossAffinities = {
   "Augur": "images/affinities/lightning.jpg",
   "Caligo": "images/affinities/fire.jpg",
   "Tricephalos": "images/affinities/holy.jpg",
+  "Heolstor": "images/affinities/holy.jpg",
 };
 
 function getCurrentBosses(now) {
