@@ -1,0 +1,105 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0)),
+    url("background.avif") no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "SF Pro", "Helvetica Neue", sans-serif;
+  color: #e0e0e0;
+}
+
+.container {
+  position: relative;
+
+  text-align: center;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  box-shadow: inset 2px 6px 8px rgba(255, 255, 255, 0.5),
+    inset -2px -6px 8px rgba(0, 0, 0, 0.25), 0 10px 20px rgba(0, 0, 0, 0.3),
+    -2px -4px 10px rgba(255, 255, 255, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.container::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 35%;
+  height: 35%;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+header h1 {
+  font-size: 2.5rem;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.5px;
+}
+
+.link-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.link-list li {
+  margin: 1rem 0;
+}
+
+.link-list a.rune-calculator {
+  position: relative;
+  display: inline-block;
+  color: #fff;
+  background: rgba(255, 140, 0, 0.35);
+  padding: 0.75rem 1.8rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  text-decoration: none;
+  border: 1.5px solid rgba(255, 140, 0, 0.6);
+
+  box-shadow: inset 2px 6px 8px rgba(255, 200, 100, 0.7),
+    inset -2px -6px 8px rgba(180, 90, 0, 0.35),
+    0 10px 20px rgba(180, 90, 0, 0.4), -2px -4px 10px rgba(255, 180, 80, 0.25);
+
+  transition: all 0.3s ease;
+}
+
+.link-list a.rune-calculator:hover {
+  background: rgba(255, 140, 0, 0.3);
+  box-shadow: inset 3px 8px 10px rgba(255, 220, 120, 0.9),
+    inset -3px -8px 10px rgba(200, 110, 10, 0.5),
+    0 14px 30px rgba(200, 110, 10, 0.6),
+    -3px -6px 14px rgba(255, 200, 100, 0.35);
+  transform: translateY(-3px);
+  color: #fff;
+}
+
+.link-list a.rune-calculator::before {
+  content: "";
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 35%;
+  height: 35%;
+  background: rgba(255, 200, 100, 0.3);
+  border-radius: 50%;
+  filter: blur(10px);
+  pointer-events: none;
+}
