@@ -167,12 +167,12 @@ const bossRotations = [
     end: "2025-08-07T10:00:00+09:00",
   },
   {
-    bosses: ["Caligo", "Gaping Maw"],
+    bosses: ["Caligo", "Sentient Pest"],
     start: "2025-08-07T10:00:00+09:00",
     end: "2025-08-14T10:00:00+09:00",
   },
   {
-    bosses: ["Equilibrious Beast", "Sentient Pest"],
+    bosses: ["Equilibrious Beast", "Gaping Maw"],
     start: "2025-08-14T10:00:00+09:00",
     end: "2025-08-21T10:00:00+09:00",
   },
@@ -457,4 +457,5 @@ document.addEventListener("click", function (event) {
 
 setInterval(updateBossCountdown, 1000);
 updateBossCountdown();
+
 
