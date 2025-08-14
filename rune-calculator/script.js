@@ -172,12 +172,12 @@ const bossRotations = [
     end: "2025-08-14T10:00:00+09:00",
   },
   {
-    bosses: ["Tricephalos", "Sentient Pest"],
+    bosses: ["Equilibrious Beast", "Sentient Pest"],
     start: "2025-08-14T10:00:00+09:00",
     end: "2025-08-21T10:00:00+09:00",
   },
   {
-    bosses: ["Equilibrious Beast", "Darkdrift Knight"],
+    bosses: ["Tricephalos", "Darkdrift Knight"],
     start: "2025-08-21T10:00:00+09:00",
     end: "2025-08-28T10:00:00+09:00",
   },
@@ -457,3 +457,4 @@ document.addEventListener("click", function (event) {
 
 setInterval(updateBossCountdown, 1000);
 updateBossCountdown();
+
