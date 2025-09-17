@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nightlord Guesser</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=VT323&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <aside class="history">
+            <div class="history-header">
+                <span class="night1-col">Night 1</span>
+                <span class="night2-col">Night 2</span>
+                <span class="boss-col">Nightlord</span>
+            </div>
+            <div class="history-items-wrapper">
+                <ul id="historyList"></ul>
+            </div>
+        </aside>
+
+        <!-- Main card -->
+        <div class="card">
+            <div class="pairing-container">
+                <div class="pairing-header">
+                    <span class="night1-col">Night 1</span>
+                    <span class="night2-col">Night 2</span>
+                </div>
+                <div class="pairing-content">
+                    <div class="night1-col" id="night1Boss">-</div>
+                    <div class="night2-col" id="night2Boss">-</div>
+                </div>
+            </div>
+
+            <select id="guess">
+                <option value="" selected disabled>Select a boss</option>
+            </select>
+            <button id="submitBtn">Submit</button>
+            <button id="nextBtn" style="display:none;">Next</button>
+            <div id="result"></div>
+            <div id="scoreBoard" class="scoreboard-container">
+                <span id="roundDisplay" class="scoreboard-left">Round: 1️⃣ of 6️⃣</span>
+                <span id="pointsDisplay" class="scoreboard-center">Points: 🫵😂</span>
+                <span id="attemptsDisplay" class="scoreboard-right">Attempts: 💀💀💀</span>
+            </div>
+            <div id="restartButtonContainer"></div>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+
+</html>
