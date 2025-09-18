@@ -118,13 +118,33 @@ const maxRounds = 6;
 let roundActive = true;
 let gameHistory = [];
 let incorrectGuesses = new Set();
+let learningInsights = [];
+let currentRoundAttempts = [];
 
-function capitalizeWords(str) {
-  return str.replace(
-    /\b\w+/g,
-    (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-  );
+function createMinibossToNightLordsMap() {
+  const map = {};
+
+  for (const [nightLord, lists] of Object.entries(data)) {
+    lists.list1.forEach((miniboss) => {
+      if (!map[miniboss]) map[miniboss] = new Set();
+      map[miniboss].add(nightLord);
+    });
+
+    lists.list2.forEach((miniboss) => {
+      if (!map[miniboss]) map[miniboss] = new Set();
+      map[miniboss].add(nightLord);
+    });
+  }
+
+  const finalMap = {};
+  for (const [miniboss, nightLords] of Object.entries(map)) {
+    finalMap[miniboss] = Array.from(nightLords).sort();
+  }
+
+  return finalMap;
 }
+
+const minibossToNightLords = createMinibossToNightLordsMap();
 
 function abbreviateBossName(name) {
   const abbreviations = {
@@ -164,6 +184,7 @@ function nextRound() {
   attemptsLeft = 3;
   roundActive = true;
   incorrectGuesses.clear();
+  currentRoundAttempts = [];
 
   document.getElementById("result").textContent = "";
   document.getElementById("nextBtn").style.display = "none";
@@ -235,17 +256,39 @@ function submitGuess() {
 
     addToHistory(currentNight1, currentNight2, currentAnswer, true, earned);
 
+    // Add correct learning insight
+    learningInsights.push({
+      type: "correct",
+      night1: currentNight1,
+      night2: currentNight2,
+      nightLord: currentAnswer,
+      timestamp: Date.now(),
+    });
+
+    updateLearningPanel();
+
     card.classList.add("glow");
 
     roundActive = false;
-    setTimeout(() => {
-      card.classList.remove("glow");
-      nextRound();
-    }, 1500);
+
+    // Check if this is the final round
+    if (round >= maxRounds) {
+      setTimeout(() => {
+        card.classList.remove("glow");
+        endGame();
+      }, 1500);
+    } else {
+      setTimeout(() => {
+        card.classList.remove("glow");
+        nextRound();
+      }, 1500);
+    }
   } else {
     attemptsLeft--;
-
     incorrectGuesses.add(choice);
+
+    // Track this attempt
+    currentRoundAttempts.push(choice);
 
     const incorrectOption = select.querySelector(`option[value="${choice}"]`);
     if (incorrectOption) {
@@ -262,8 +305,34 @@ function submitGuess() {
 
       addToHistory(currentNight1, currentNight2, currentAnswer, false, 0);
 
+      // Add incorrect learning insight with all attempts
+      const night1NightLords = minibossToNightLords[currentNight1] || [];
+      const night2NightLords = minibossToNightLords[currentNight2] || [];
+
+      learningInsights.push({
+        type: "incorrect",
+        night1: currentNight1,
+        night2: currentNight2,
+        attemptedNightLords: [...currentRoundAttempts],
+        correctNightLord: currentAnswer,
+        night1NightLords: night1NightLords,
+        night2NightLords: night2NightLords,
+        timestamp: Date.now(),
+      });
+
+      updateLearningPanel();
+
       roundActive = false;
-      document.getElementById("nextBtn").style.display = "block";
+
+      // Check if this is the final round
+      if (round >= maxRounds) {
+        document.getElementById("nextBtn").style.display = "none";
+        setTimeout(() => {
+          endGame();
+        }, 1500);
+      } else {
+        document.getElementById("nextBtn").style.display = "block";
+      }
     }
 
     card.classList.add("shake");
@@ -303,6 +372,56 @@ function updateHistoryDisplay() {
       <span class="boss-col">${entry.displayBoss}</span>
     `;
     historyList.appendChild(li);
+  });
+}
+
+function updateLearningPanel() {
+  const learningList = document.getElementById("learningList");
+  learningList.innerHTML = "";
+
+  const recentInsights = learningInsights.slice(-6);
+
+  if (recentInsights.length === 0) {
+    learningList.innerHTML =
+      "<div class='learning-item' style='text-align: center; color: #888;'>Make guesses to see learning insights</div>";
+    return;
+  }
+
+  recentInsights.forEach((insight) => {
+    const div = document.createElement("div");
+    div.className = `learning-item ${insight.type}`;
+
+    if (insight.type === "correct") {
+      div.innerHTML = `
+        <div><strong>✅ Correct!</strong></div>
+        <div>${insight.night1} + ${insight.night2}</div>
+        <div>→ <span class="nightlord-name">${insight.nightLord}</span></div>
+      `;
+    } else {
+      div.innerHTML = `
+        <div><strong>❌ You selected:</strong></div>
+        <div>${insight.attemptedNightLords
+          .map((nl) => `<span class="nightlord-name">${nl}</span>`)
+          .join(", ")}</div>
+        <div style="margin-top: 0.5em;">But <span class="boss-name">${
+          insight.night1
+        }</span> appears with:</div>
+        <div>${insight.night1NightLords
+          .map((nl) => `<span class="nightlord-name">${nl}</span>`)
+          .join(", ")}</div>
+        <div style="margin-top: 0.5em;"><span class="boss-name">${
+          insight.night2
+        }</span> appears with:</div>
+        <div>${insight.night2NightLords
+          .map((nl) => `<span class="nightlord-name">${nl}</span>`)
+          .join(", ")}</div>
+        <div style="margin-top: 0.5em;">Correct answer: <span class="nightlord-name">${
+          insight.correctNightLord
+        }</span></div>
+      `;
+    }
+
+    learningList.appendChild(div);
   });
 }
 
@@ -353,12 +472,14 @@ function restartGame() {
   roundActive = true;
   gameHistory = [];
   incorrectGuesses.clear();
+  learningInsights = [];
+  currentRoundAttempts = [];
 
-  document.getElementById("submitBtn").style.display = "block";
+  document.getElementById("submitBtn").style.display = "inline-block";
   document.getElementById("restartButtonContainer").innerHTML = "";
-
   document.getElementById("historyList").innerHTML = "";
 
+  updateLearningPanel();
   nextRound();
 }
 
